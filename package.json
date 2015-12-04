@@ -1,0 +1,14 @@
+{
+  "name": "tictactoe_lib",
+  "version": "1.0.0",
+  "description": "library of typescript components for tictactoe game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "chaitanya (chaitanyal@gmail.com)",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^3.4.1"
+  }
+}
