@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require("./build/tictactoe.js");
+require("./build/main.js");
