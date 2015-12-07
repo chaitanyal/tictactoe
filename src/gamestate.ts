@@ -28,8 +28,8 @@ export class GameState {
 		//get all possible moves, find the max, set that as current game state, swap player and opponent.
 		let newGameState:GameState = AI.minimax(this)[0];
 		this.board = newGameState.board;
-		this.player = newGameState.player;
-		this.opponent = newGameState.opponent;
+		this.player = Player.HUMAN;
+		this.opponent = Player.COMPUTER;
 	}
 	
 	score():number{
