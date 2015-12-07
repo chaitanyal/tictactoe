@@ -42,37 +42,37 @@ export module AI {
 		return [m,index];
 	}
 	
-	export function aplahbetaminimax (g:GameState,alpha:number,beta:number,maxPlayer:boolean):GameState {
-		if (g.board.isFinalState()) { //terminal condition
-			return g;
-		}
+	// export function aplahbetaminimax (g:GameState,alpha:number,beta:number,maxPlayer:boolean):GameState {
+	// 	if (g.board.isFinalState()) { //terminal condition
+	// 		return g;
+	// 	}
 		
-		let moves:GameState[] = g.availablePlays();
+	// 	let moves:GameState[] = g.availablePlays();
 		
-		if(maxPlayer) {
-			let v:number = Number.MIN_VALUE;
-			let rt:GameState = null;
-			for(let node of moves) {
-				rt = aplahbetaminimax (node,alpha,beta,false);
-				v = Math.max(v,rt.score());
-				alpha = Math.max(alpha,v);
-				if (beta <= alpha) {
-					break;	
-				}
-			}
-			return rt;
-		} else {
-			let v:number = Number.MAX_VALUE;
-			let rt:GameState = null;
-			for(let node of moves) {
-				rt = aplahbetaminimax (node,alpha,beta,true);
-				v = Math.min(v,rt.score());
-				beta = Math.max(beta,v);
-				if (beta <= alpha) {
-					break;	
-				}
-			}
-			return rt;
-		}
-	}
+	// 	if(maxPlayer) {
+	// 		let v:number = Number.MIN_VALUE;
+	// 		let rt:GameState = null;
+	// 		for(let node of moves) {
+	// 			rt = aplahbetaminimax (node,alpha,beta,false);
+	// 			v = Math.max(v,rt.score());
+	// 			alpha = Math.max(alpha,v);
+	// 			if (beta <= alpha) {
+	// 				break;	
+	// 			}
+	// 		}
+	// 		return rt;
+	// 	} else {
+	// 		let v:number = Number.MAX_VALUE;
+	// 		let rt:GameState = null;
+	// 		for(let node of moves) {
+	// 			rt = aplahbetaminimax (node,alpha,beta,true);
+	// 			v = Math.min(v,rt.score());
+	// 			beta = Math.max(beta,v);
+	// 			if (beta <= alpha) {
+	// 				break;	
+	// 			}
+	// 		}
+	// 		return rt;
+	// 	}
+	// }
 }

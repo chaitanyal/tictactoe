@@ -1,14 +1,15 @@
 {
   "name": "tictactoe_lib",
   "version": "1.0.0",
-  "description": "library of typescript components for tictactoe game",
+  "description": "tic tac toe game using minimax algorithm.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "chaitanya (chaitanyal@gmail.com)",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "chai": "^3.4.1"
+    "chai": "^3.4.1",
+    "readline": "^1.2.1"
   }
 }
