@@ -1,58 +1,71 @@
 /// </// <reference path="typings/tsd.d.ts" />
+import * as ReadLine from 'readline';
 
+import {AI} from './minimax';
 import {Board,Player} from './board';
 import {GameState} from './gameState';
-import * as ReadLine from 'readline';
-import * as stream from 'stream';
-import * as chai from 'chai';
-import {AI} from './minimax';
 
-let assert = chai.assert;
+let b:Board = new Board();
+// b.cells = [ 1,0,0,1,1,0,null,null,null];
+b.cells = [ null,null,null,null,null,null,null,null,null];
+
+let g = new GameState(b,Player.HUMAN,Player.COMPUTER);
 
 let read = ReadLine.createInterface({input: process.stdin, output:process.stdout});
 
-let b:Board = new Board();
-b.cells = [null,null,null,null,null,null,null,null,null];
-let g = new GameState(b,Player.COMPUTER,Player.HUMAN);
-console.time(`calling minmax 1`);
-let result = AI.minimax(g)[0];
-// let result = AI.aplahbetaminimax(g,Number.MIN_VALUE,Number.MAX_VALUE,true);
-console.timeEnd('calling minmax 1');
-console.log(result);
+// read.on('line', function(line) {
+// 	let r = AI.minimax(g);
+// 	console.log(r[0]);
+// 	console.log(r[1]);
+// });
 
+let prefix = 'TicTacToe> ';
+console.log(`${prefix} You start, input cell #.`);
+console.log(`${prefix} - - -`);
+console.log(`${prefix} - - -`);
+console.log(`${prefix} - - -`);
 
-b.cells = [1,null,null,null,null,null,null,null,null];
-console.time(`calling minmax 1`);
-result = AI.minimax(g)[0];
-console.timeEnd('calling minmax 1');
-console.log(result);
+read.prompt();
 
-b.cells = [1,null,null,null,null,null,null,null,null];
-console.time(`calling minmax 1`);
-result = AI.minimax(g)[0];
-console.timeEnd('calling minmax 1');
-console.log(result);
+read.on('line', function(line) {
+	let cell = parseInt(line.trim());
+	g.humanMove(cell);
+	checkStatus(g,read);
+	g.computerMove();
+	console.log(`${prefix} ${g.board.cells.slice(0,3)}`);
+	console.log(`${prefix} ${g.board.cells.slice(3,6)}`);
+	console.log(`${prefix} ${g.board.cells.slice(6,9)}`);
+	checkStatus(g,read);
+	read.setPrompt(prefix);
+  	read.prompt();
+}).on('close',function(){
+	console.log('Bye');
+	process.exit(0);
+});
 
-b.cells = [0,0,null,null,null,null,null,1,1];
-console.time(`calling minmax 2`);
-result = AI.minimax(g)[0];
-console.timeEnd('calling minmax 2');
-console.log(result);
+function checkStatus(g:GameState,r:ReadLine.ReadLine) {
+	
+	if(g.isFinalState()){
+		if(g.isDraw()) {
+			console.log(`${prefix} Game Over! It was a draw.`);
+		}
+		
+		let w = g.winner();
+		
+		if(w === Player.COMPUTER) {
+			console.log(`${prefix} Game Over! I win.`);
+		}
+		
+		if(w === Player.HUMAN) {
+			console.log(`${prefix} Game Over! You win.`);
+		}
+		
+		process.exit(0);
+	}
+}
 
-// b.cells = [0,0,null,null,null,null,null,1,1];
-// console.time(`calling minmax 2`);
-// result = AI.minmax(g)[0];
-// console.timeEnd('calling minmax 2');
-// console.log(`result ${result}`);
-
-// b.cells = [0,0,1,0,1,0,null,1,1];
-// console.time(`calling minmax 3`);
-// let result = AI.minmax(g)[0];
-// console.timeEnd('calling minmax 3');
-// console.log(`result ${result}`);
-
-// b.cells = [0,0,1,0,1,0,null,1,1];
-// console.time(`calling minmax 3`);
-// let result = AI.minmax(g)[0];
-// console.timeEnd('calling minmax 3');
-// console.log(`result ${result}`);
+// console.time(`calling minmax 1`);
+// let result = AI.minimax(g)[0];
+// // let result = AI.aplahbetaminimax(g,Number.MIN_VALUE,Number.MAX_VALUE,true);
+// console.timeEnd('calling minmax 1');
+// console.log(result);
