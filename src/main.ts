@@ -6,7 +6,7 @@ import {Board,Player} from './board';
 import {GameState} from './gameState';
 
 let b:Board = new Board();
-// b.cells = [ 1,0,0,1,1,0,null,null,null];
+// b.cells = [ 0,null,1,1,0,0,null,1,1];
 b.cells = [ null,null,null,null,null,null,null,null,null];
 
 let g = new GameState(b,Player.HUMAN,Player.COMPUTER);
@@ -63,9 +63,3 @@ function checkStatus(g:GameState,r:ReadLine.ReadLine) {
 		process.exit(0);
 	}
 }
-
-// console.time(`calling minmax 1`);
-// let result = AI.minimax(g)[0];
-// // let result = AI.aplahbetaminimax(g,Number.MIN_VALUE,Number.MAX_VALUE,true);
-// console.timeEnd('calling minmax 1');
-// console.log(result);
