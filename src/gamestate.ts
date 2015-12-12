@@ -1,25 +1,27 @@
-import {Board,Player} from './board';
 import {AI} from './minimax';
 import * as chai from "chai";
 
 let assert = chai.assert;
 
+export enum Player {COMPUTER=0, HUMAN=1};
+
 export class GameState {
-	board:Board;
+	// board:Board;
+	board:number[] = null;
 	player:Player;
 	opponent:Player;
 	
-	constructor(b:Board,p:Player,o:Player) {
-		this.board = b;
+	constructor(p:Player,o:Player) {
+		this.board = [null,null,null,null,null,null,null,null,null]
 		this.player = p;
 		this.opponent = o;	
 	}
 	
 	humanMove(cell:number){
-		assert(this.board.getCellValue(cell) === null,"Invalid move, cannot overwrite an cell");
+		assert(this.board[cell] === null,"Invalid move, cannot overwrite an cell");
 		assert(this.player === Player.HUMAN,"Not human's turn");
 		assert(this.isFinalState() === false);
-		this.board.play(cell,Player.HUMAN);
+		this.board[cell] = Player.HUMAN;
 		this.player = Player.COMPUTER;
 		this.opponent = Player.HUMAN;
 	}
@@ -50,7 +52,7 @@ export class GameState {
 	/** return GameStates with cell marked */
 	availablePlays():GameState[]{
 		let emptyCells:number[] = [];
-		let boardCells = this.board.cells;
+		let boardCells = this.board;
 		
 		for(let i = 0; i < boardCells.length; i++) {
 			if (boardCells[i] === null) {
@@ -60,11 +62,12 @@ export class GameState {
 		let newGameStates:GameState[] = [];
 		
 		emptyCells.forEach((n) => {
-			let b:Board = Board.clone(this.board);
-			//set cell
-			b.play(n,this.player); 
 			//player becomes opponent & vice versa
-			newGameStates.push(new GameState(b,this.opponent,this.player)); 
+			//set cell
+			let g = new GameState(this.opponent,this.player);
+			g.board = this.board.slice(0);
+			g.board[n] = this.player;
+			newGameStates.push(g); 
 		});
 		return newGameStates;
 	}
@@ -73,27 +76,27 @@ export class GameState {
 	public winner():number {
 		// test diagnal -  
 		let diagnalWinner:number = this.checkLine(
-			[this.board.cells[0],this.board.cells[4],this.board.cells[8]]
+			[this.board[0],this.board[4],this.board[8]]
 		);
 	
 		// test reverse diagonal
 		let reverseDiagnalWinner:number = this.checkLine(
-			[this.board.cells[2],this.board.cells[4],this.board.cells[6]]
+			[this.board[2],this.board[4],this.board[6]]
 		);
 	
 		// test each row
 		let rows:number[][] = [
-			[this.board.cells[0],this.board.cells[1],this.board.cells[2]],
-			[this.board.cells[3],this.board.cells[4],this.board.cells[5]],
-			[this.board.cells[6],this.board.cells[7],this.board.cells[8]]
+			[this.board[0],this.board[1],this.board[2]],
+			[this.board[3],this.board[4],this.board[5]],
+			[this.board[6],this.board[7],this.board[8]]
 		];
 		let rowWinners:number[] = rows.map( (r) => this.checkLine(r));
 	
 		// test each column
 		let columns:number[][] = [
-			[this.board.cells[0],this.board.cells[3],this.board.cells[6]],
-			[this.board.cells[1],this.board.cells[4],this.board.cells[7]],
-			[this.board.cells[2],this.board.cells[5],this.board.cells[8]]
+			[this.board[0],this.board[3],this.board[6]],
+			[this.board[1],this.board[4],this.board[7]],
+			[this.board[2],this.board[5],this.board[8]]
 		];
 		let columnWinners:number[] = columns.map( (c) => this.checkLine(c));
 	
@@ -112,9 +115,9 @@ export class GameState {
 	/**all slots are taken and there is no winner */
 	public isDraw():boolean {
 		// not a draw if there are empty cells
-		if(	this.board.cells[0] === null || this.board.cells[1] === null || this.board.cells[2] === null ||
-			this.board.cells[3] === null || this.board.cells[4] === null || this.board.cells[5] === null ||
-			this.board.cells[6] === null || this.board.cells[7] === null || this.board.cells[8] === null) {
+		if(	this.board[0] === null || this.board[1] === null || this.board[2] === null ||
+			this.board[3] === null || this.board[4] === null || this.board[5] === null ||
+			this.board[6] === null || this.board[7] === null || this.board[8] === null) {
 			// draw if there are no empty cells
 			return false;
 		} else if (this.winner() != null) {

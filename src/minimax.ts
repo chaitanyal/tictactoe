@@ -1,7 +1,6 @@
 /// </// <reference path="typings/tsd.d.ts" />
 
-import {Board,Player} from './board';
-import {GameState} from './gamestate'
+import {GameState,Player} from './gamestate'
 
 export module AI {
 	export function minimax (g:GameState):[GameState,number] {

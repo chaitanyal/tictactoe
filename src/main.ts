@@ -2,22 +2,11 @@
 import * as ReadLine from 'readline';
 
 import {AI} from './minimax';
-import {Board,Player} from './board';
-import {GameState} from './gameState';
+import {GameState,Player} from './gameState';
 
-let b:Board = new Board();
-// b.cells = [ 0,null,1,1,0,0,null,1,1];
-b.cells = [ null,null,null,null,null,null,null,null,null];
-
-let g = new GameState(b,Player.HUMAN,Player.COMPUTER);
+let g = new GameState(Player.HUMAN,Player.COMPUTER);
 
 let read = ReadLine.createInterface({input: process.stdin, output:process.stdout});
-
-// read.on('line', function(line) {
-// 	let r = AI.minimax(g);
-// 	console.log(r[0]);
-// 	console.log(r[1]);
-// });
 
 let prefix = 'TicTacToe> ';
 console.log(`${prefix} You start, input cell #.`);
@@ -32,9 +21,9 @@ read.on('line', function(line) {
 	g.humanMove(cell);
 	checkStatus(g,read);
 	g.computerMove();
-	console.log(`${prefix} ${g.board.cells.slice(0,3)}`);
-	console.log(`${prefix} ${g.board.cells.slice(3,6)}`);
-	console.log(`${prefix} ${g.board.cells.slice(6,9)}`);
+	console.log(`${prefix} ${g.board.slice(0,3)}`);
+	console.log(`${prefix} ${g.board.slice(3,6)}`);
+	console.log(`${prefix} ${g.board.slice(6,9)}`);
 	checkStatus(g,read);
 	read.setPrompt(prefix);
   	read.prompt();
@@ -63,3 +52,12 @@ function checkStatus(g:GameState,r:ReadLine.ReadLine) {
 		process.exit(0);
 	}
 }
+
+// let g = new GameState(Player.HUMAN,Player.COMPUTER);
+// let read = ReadLine.createInterface({input: process.stdin, output:process.stdout});
+// b.cells = [ 0,null,1,1,0,0,null,1,1];
+// read.on('line', function(line) {
+// 	let r = AI.minimax(g);
+// 	console.log(r[0]);
+// 	console.log(r[1]);
+// });
