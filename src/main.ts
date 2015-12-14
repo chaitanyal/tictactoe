@@ -2,11 +2,11 @@
 import * as ReadLine from 'readline';
 
 import {AI} from './minimax';
-import {GameState,Player} from './gameState';
+import {GameState, Player} from './gameState';
 
-let g = new GameState(Player.HUMAN,Player.COMPUTER);
+let g = new GameState(Player.HUMAN, Player.COMPUTER);
 
-let read = ReadLine.createInterface({input: process.stdin, output:process.stdout});
+let read = ReadLine.createInterface({input: process.stdin, output: process.stdout});
 
 let prefix = 'TicTacToe> ';
 console.log(`${prefix} You start, input cell #.`);
@@ -19,36 +19,36 @@ read.prompt();
 read.on('line', function(line) {
 	let cell = parseInt(line.trim());
 	g.humanMove(cell);
-	checkStatus(g,read);
+	checkStatus(g, read);
 	g.computerMove();
 	console.log(`${prefix} ${g.board.slice(0,3)}`);
 	console.log(`${prefix} ${g.board.slice(3,6)}`);
 	console.log(`${prefix} ${g.board.slice(6,9)}`);
-	checkStatus(g,read);
+	checkStatus(g, read);
 	read.setPrompt(prefix);
   	read.prompt();
-}).on('close',function(){
+}).on('close', function(){
 	console.log('Bye');
 	process.exit(0);
 });
 
-function checkStatus(g:GameState,r:ReadLine.ReadLine) {
-	
-	if(g.isFinalState()){
-		if(g.isDraw()) {
+function checkStatus(g: GameState, r: ReadLine.ReadLine) {
+
+	if (g.isFinalState()) {
+		if (g.isDraw()) {
 			console.log(`${prefix} Game Over! It was a draw.`);
 		}
-		
+
 		let w = g.winner();
-		
-		if(w === Player.COMPUTER) {
+
+		if (w === Player.COMPUTER) {
 			console.log(`${prefix} Game Over! I win.`);
 		}
-		
-		if(w === Player.HUMAN) {
+
+		if (w === Player.HUMAN) {
 			console.log(`${prefix} Game Over! You win.`);
 		}
-		
+
 		process.exit(0);
 	}
 }
