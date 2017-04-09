@@ -3,7 +3,7 @@ import * as chai from 'chai';
 
 let assert = chai.assert;
 
-export enum Player {COMPUTER = 0, HUMAN = 1};
+export enum Player {COMPUTER = 0, HUMAN = 1}
 
 export class GameState {
 	// board: Board;
@@ -115,7 +115,7 @@ export class GameState {
 	/**all slots are taken and there is no winner */
 	public isDraw(): boolean {
 		// not a draw if there are empty cells
-		if (	this.board[0] === null || this.board[1] === null || this.board[2] === null ||
+		if (this.board[0] === null || this.board[1] === null || this.board[2] === null ||
 			this.board[3] === null || this.board[4] === null || this.board[5] === null ||
 			this.board[6] === null || this.board[7] === null || this.board[8] === null) {
 			// draw if there are no empty cells
@@ -138,8 +138,12 @@ export class GameState {
 		let isPerfectPlayer: boolean = line.every((s) => {return s === Player.COMPUTER; });
 		let isHuman: boolean = line.every((s) => {return s === Player.HUMAN; });
 
-		if (isPerfectPlayer) {return Player.COMPUTER; };
-		if (isHuman) {return Player.HUMAN; };
+		if (isPerfectPlayer) {
+			return Player.COMPUTER;
+		}
+		if (isHuman) {
+			return Player.HUMAN;
+		}
 		return null;
 	}
 }

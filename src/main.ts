@@ -17,13 +17,13 @@ console.log(`${prefix} - - -`);
 read.prompt();
 
 read.on('line', function(line) {
-	let cell = parseInt(line.trim());
+	let cell = parseInt(line.trim(), 10);
 	g.humanMove(cell);
 	checkStatus(g, read);
 	g.computerMove();
-	console.log(`${prefix} ${g.board.slice(0,3)}`);
-	console.log(`${prefix} ${g.board.slice(3,6)}`);
-	console.log(`${prefix} ${g.board.slice(6,9)}`);
+	console.log(`${prefix} ${g.board.slice(0, 3)}`);
+	console.log(`${prefix} ${g.board.slice(3, 6)}`);
+	console.log(`${prefix} ${g.board.slice(6, 9)}`);
 	checkStatus(g, read);
 	read.setPrompt(prefix);
   	read.prompt();
